@@ -1,0 +1,51 @@
+/* Template: map — a left rail with a cycling client list next to an animated USA
+   map with pulsing location pins. Pairs with map.js (D3 + topojson). Good for
+   showing geographic data: clients, offices, events by city. */
+
+.map-screen {
+  position: relative;
+  width: 100vw; height: 100vh;
+  background: var(--slide-bg); font-family: var(--font);
+  display: grid; grid-template-columns: 30% 1fr;
+  overflow: hidden;
+}
+
+.map-left {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  padding: 5vh 4.5vw;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.map-title {
+  font-size: clamp(28px, 4.2vw, 60px); font-weight: 900; color: #fff;
+  line-height: 0.9; text-transform: uppercase; letter-spacing: -0.03em;
+  margin-bottom: clamp(12px, 1.8vh, 22px);
+  opacity: 0; animation: fadeUp 0.6s 0.25s forwards;
+}
+
+.brand-list { flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  opacity: 0; animation: fadeUp 0.7s 0.35s forwards; }
+.brand-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: clamp(4px, 0.6vh, 8px) 10px;
+  border-radius: 4px; transition: all 0.4s ease;
+}
+.brand-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; transition: transform 0.3s; }
+.brand-name-lbl {
+  font-size: clamp(11px, 1.1vw, 16px); font-weight: 600;
+  color: rgba(255, 255, 255, 0.38); text-transform: uppercase;
+  letter-spacing: 0.03em; transition: color 0.3s; flex: 1;
+}
+.brand-city-lbl {
+  font-size: clamp(9px, 0.88vw, 13px); color: rgba(255, 255, 255, 0.2);
+  transition: color 0.3s; white-space: nowrap;
+}
+.brand-item.active { background: rgba(3, 117, 255, 0.1); }
+.brand-item.active .brand-name-lbl { color: #fff; }
+.brand-item.active .brand-dot { transform: scale(1.4); }
+.brand-item.active .brand-city-lbl { color: var(--accent); }
+
+.map-area { position: relative; z-index: 1; overflow: hidden; }
+.map-area svg { width: 100%; height: 100%; }

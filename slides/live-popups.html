@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · Our Live Popups</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/popups.css">
+</head>
+<body>
+<div class="popups-screen">
+  <div class="clock" id="clock-el"></div>
+  <div class="popups-left">
+    <div class="brand">
+      <div class="logo-wrap"></div>
+      <div class="top-label">Budapest office</div>
+    </div>
+    <!-- EDIT: the headline (use <br> to break lines) -->
+    <div class="popups-title">Our<br>live<br>popups</div>
+    <div class="popups-spacer"></div>
+  </div>
+  <div class="popups-stage">
+    <div class="popup-slot" id="slot-0"></div>
+    <div class="popup-slot" id="slot-1"></div>
+    <div class="popup-slot" id="slot-2"></div>
+  </div>
+</div>
+
+<script>
+// ─── EDIT HERE ─────────────────────────────────────────────────
+// Image files live in ../assets/popups/. Three show at once and cross-fade.
+const POPUPS = [
+  { src: '../assets/popups/goose-creek.png',      alt: 'Goose Creek' },
+  { src: '../assets/popups/her-fantasy-box.png',  alt: 'Her Fantasy Box' },
+  { src: '../assets/popups/scentiment.png',       alt: 'Scentiment' },
+  { src: '../assets/popups/burlebo.png',          alt: 'Burlebo' },
+  { src: '../assets/popups/simple-modern.png',    alt: 'Simple Modern' },
+  { src: '../assets/popups/wellness-company.png', alt: 'The Wellness Company' },
+  { src: '../assets/popups/carnivore-snax.png',   alt: 'Carnivore Snax' },
+];
+// ──────────────────────────────────────────────────────────────
+</script>
+<script src="../shared/chrome.js"></script>
+<script src="../shared/popups.js"></script>
+</body>
+</html>

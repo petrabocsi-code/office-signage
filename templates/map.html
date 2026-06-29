@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · Map slide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/map.css">
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+</head>
+<body>
+<div class="map-screen">
+  <div class="clock" id="clock-el"></div>
+  <div class="map-left">
+    <div class="brand">
+      <div class="logo-wrap"></div>
+      <div class="top-label">Budapest office</div>
+    </div>
+    <!-- EDIT: the headline (use <br> to break lines) -->
+    <div class="map-title">Top<br>clients<br>USA</div>
+    <div class="brand-list" id="brand-list"></div>
+  </div>
+  <div class="map-area">
+    <svg id="usa-svg" viewBox="0 0 960 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <g id="states" fill="#0d1e38" stroke="rgba(3,117,255,0.18)" stroke-width="0.7" stroke-linejoin="round"></g>
+      <g id="state-labels" fill="rgba(255,255,255,0.13)" font-family="Inter,sans-serif" font-weight="700" font-size="11" text-anchor="middle"></g>
+      <g id="pins"></g>
+    </svg>
+  </div>
+</div>
+
+<script>
+// ─── EDIT HERE ─────────────────────────────────────────────────
+// One entry per pin. lat/lon place it on the US map automatically.
+// color is the dot + highlight pill colour (any CSS colour / hex).
+const CLIENTS = [
+  { name: 'Company One', city: 'Austin, TX',       lat: 30.27, lon: -97.74, color: '#F59E0B' },
+  { name: 'Company Two', city: 'San Francisco, CA', lat: 37.77, lon: -122.42, color: '#0375FF' },
+];
+// ──────────────────────────────────────────────────────────────
+</script>
+<script src="../shared/chrome.js"></script>
+<script src="../shared/map.js"></script>
+</body>
+</html>

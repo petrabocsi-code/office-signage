@@ -1,0 +1,52 @@
+/* Template: popups — a left rail next to three overlapping, staggered cards that
+   cycle through a set of screenshots. Pairs with popups.js. Good for showing off
+   a gallery of images (live popups, product shots, press) on a loop. */
+
+.popups-screen {
+  position: relative;
+  width: 100vw; height: 100vh;
+  background: var(--slide-bg); font-family: var(--font);
+  display: grid; grid-template-columns: 22% 1fr;
+  overflow: hidden;
+}
+
+.popups-left {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column;
+  padding: 5vh 4.5vw;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.popups-title {
+  font-size: clamp(42px, 6.8vw, 96px); font-weight: 900; color: #fff;
+  line-height: 0.88; text-transform: uppercase; letter-spacing: -0.03em;
+  margin-bottom: clamp(12px, 1.8vh, 22px);
+  opacity: 0; animation: fadeUp 0.6s 0.25s forwards;
+}
+.popups-spacer { flex: 1; }
+
+.popups-stage {
+  display: flex; align-items: stretch; overflow: hidden;
+  position: relative; z-index: 1; padding: 2vh 1.5vw;
+}
+
+.popup-slot { position: relative; flex: 0 0 39%; min-width: 0; overflow: hidden; }
+/* left → middle → right stacking, overlapped via negative margins */
+#slot-0 { z-index: 1; }
+#slot-1 { margin-left: -8.5%; z-index: 2; }
+#slot-2 { margin-left: -8.5%; z-index: 3; }
+
+/* position:absolute so swapping images never causes layout reflow/jump */
+.popup-card {
+  position: absolute; width: 100%; height: auto; max-height: 84vh;
+  border-radius: 14px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: opacity 0.55s ease;
+}
+/* per-slot vertical stagger */
+#slot-0 .popup-card { top: 5vh; }
+#slot-1 .popup-card { bottom: 7vh; }
+#slot-2 .popup-card { top: calc(50% - 2vh); transform: translateY(-50%); }
+
+.popup-card.fade-out { opacity: 0; pointer-events: none; }
+.popup-card.fade-in-start { opacity: 0; }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · Attendance slide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/attendance.css">
+</head>
+<body>
+<div class="tree-screen">
+  <div class="clock" id="clock-el"></div>
+  <div class="tree-top">
+    <div class="brand">
+      <div class="logo-wrap"></div>
+      <div class="top-label">Budapest office</div>
+    </div>
+  </div>
+  <div class="tree-body">
+    <canvas class="tree-canvas" id="treeCanvas"></canvas>
+    <div class="tree-overlay">
+      <div class="tree-num" id="treeNum">--%</div>
+      <!-- EDIT: the label under the big number -->
+      <div class="tree-sub">of board minimum met</div>
+      <div class="tree-badge" id="treeBadge">Loading</div>
+      <div class="tree-msg" id="treeMsg">Fetching data…</div>
+    </div>
+  </div>
+  <div class="tree-footer">
+    <span class="tree-note" id="treeUpdated">Connecting to sheet…</span>
+    <span class="tree-note" id="treeStats"></span>
+  </div>
+</div>
+
+<script>
+// ─── EDIT: point this at your Google Sheet (shared "anyone with the link") ──
+// dataGid   = tab with columns: date, headcount, checkins
+// configGid = tab with columns: month, working_days
+const ATTENDANCE = {
+  sheetId: 'YOUR_SHEET_ID',
+  dataGid: '0',
+  configGid: '0',
+};
+// ──────────────────────────────────────────────────────────────
+</script>
+<script src="../shared/chrome.js"></script>
+<script src="../shared/attendance.js"></script>
+</body>
+</html>

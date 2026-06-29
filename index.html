@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Office Signage</title>
+  <link rel="stylesheet" href="shared/theme.css" />
+  <style>
+    #stage { position: absolute; inset: 0; }
+    .frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .frame.visible { opacity: 1; }
+    #placeholder:not([hidden]) {
+      position: absolute;
+      inset: 0;
+      color: var(--fg);
+      font-family: var(--font);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4vw;
+    }
+  </style>
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="placeholder" hidden>
+    <h1>No slides yet</h1>
+    <p>Add an HTML file to <code>slides/</code> and list it in <code>slides.json</code>.</p>
+  </div>
+  <script src="shared/rotator.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · Office Attendance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/attendance.css">
+</head>
+<body>
+<div class="tree-screen">
+  <div class="clock" id="clock-el"></div>
+  <div class="tree-top">
+    <div class="brand">
+      <div class="logo-wrap"></div>
+      <div class="top-label">Budapest office</div>
+    </div>
+  </div>
+  <div class="tree-body">
+    <canvas class="tree-canvas" id="treeCanvas"></canvas>
+    <div class="tree-overlay">
+      <div class="tree-num" id="treeNum">--%</div>
+      <div class="tree-sub">of board minimum met</div>
+      <div class="tree-badge" id="treeBadge">Loading</div>
+      <div class="tree-msg" id="treeMsg">Fetching data…</div>
+    </div>
+  </div>
+  <div class="tree-footer">
+    <span class="tree-note" id="treeUpdated">Connecting to sheet…</span>
+    <span class="tree-note" id="treeStats">Board minimum: headcount × 0.8 × 3 days/week</span>
+  </div>
+</div>
+
+<script>
+// ─── EDIT HERE ─────────────────────────────────────────────────
+// Which Google Sheet to read. The sheet must be shared "anyone with the link".
+const ATTENDANCE = {
+  sheetId: '1Dtp78qsRXpYsmK7vD4PWhPtdAE9DEHUS',
+  dataGid: '1458234412',    // tab with date, headcount, checkins
+  configGid: '685099077',   // tab with month, working_days
+};
+// ──────────────────────────────────────────────────────────────
+</script>
+<script src="../shared/chrome.js"></script>
+<script src="../shared/attendance.js"></script>
+</body>
+</html>

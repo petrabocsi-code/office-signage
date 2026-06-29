@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · Popups slide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<link rel="stylesheet" href="../shared/popups.css">
+</head>
+<body>
+<div class="popups-screen">
+  <div class="clock" id="clock-el"></div>
+  <div class="popups-left">
+    <div class="brand">
+      <div class="logo-wrap"></div>
+      <div class="top-label">Budapest office</div>
+    </div>
+    <!-- EDIT: the headline (use <br> to break lines) -->
+    <div class="popups-title">Our<br>live<br>popups</div>
+    <div class="popups-spacer"></div>
+  </div>
+  <div class="popups-stage">
+    <div class="popup-slot" id="slot-0"></div>
+    <div class="popup-slot" id="slot-1"></div>
+    <div class="popup-slot" id="slot-2"></div>
+  </div>
+</div>
+
+<script>
+// ─── EDIT HERE ─────────────────────────────────────────────────
+// One entry per image. Put the image files in ../assets/<folder>/ and
+// reference them here. Three show at once; they cross-fade through the list.
+const POPUPS = [
+  { src: '../assets/popups/example-1.png', alt: 'Example One' },
+  { src: '../assets/popups/example-2.png', alt: 'Example Two' },
+  { src: '../assets/popups/example-3.png', alt: 'Example Three' },
+];
+// ──────────────────────────────────────────────────────────────
+</script>
+<script src="../shared/chrome.js"></script>
+<script src="../shared/popups.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+/* Template: board — left headline + countdown, right lists of events/birthdays.
+   Good for schedules, menus, "what's coming up". Pairs with board.js. */
+
+.main-title {
+  font-size: clamp(36px, 6.4vw, 92px); font-weight: 900;
+  color: var(--fg); line-height: 0.92;
+  text-transform: uppercase; letter-spacing: -0.02em;
+  opacity: 0; animation: fadeUp 0.7s 0.22s forwards;
+}
+.month-badge {
+  display: inline-block; margin-top: 16px;
+  font-size: clamp(10px, 1vw, 14px); font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); border: 1.5px solid rgba(3, 117, 255, 0.4);
+  padding: 5px 14px; border-radius: 3px;
+  opacity: 0; animation: fadeUp 0.7s 0.3s forwards;
+}
+.countdown-box {
+  margin-top: clamp(14px, 2.2vh, 28px);
+  opacity: 0; animation: fadeUp 0.7s 0.38s forwards;
+}
+.countdown-label {
+  font-size: clamp(9px, 0.9vw, 13px); font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28); margin-bottom: 8px;
+}
+.countdown-next {
+  font-size: clamp(16px, 1.75vw, 26px); font-weight: 900;
+  color: var(--fg); margin-bottom: 10px;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.1;
+}
+.countdown-num {
+  font-size: clamp(38px, 4.8vw, 68px); font-weight: 900;
+  color: var(--accent); line-height: 1;
+}
+.countdown-unit {
+  font-size: clamp(10px, 1vw, 14px); font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28); margin-left: 8px;
+}
+
+.right {
+  padding: 4vh 4.5vw;
+  display: grid; grid-template-rows: 1fr auto;
+  gap: clamp(10px, 1.8vh, 22px);
+}
+.events-section { display: flex; flex-direction: column; justify-content: center; }
+.section-label {
+  font-size: clamp(9px, 0.9vw, 13px); font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25); margin-bottom: clamp(8px, 1.2vh, 16px);
+  opacity: 0; animation: fadeUp 0.5s 0.28s forwards;
+}
+.event-row {
+  display: flex; align-items: center;
+  padding: clamp(10px, 1.6vh, 20px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  gap: 14px; opacity: 0;
+  animation: fadeUp 0.5s calc(0.32s + var(--i, 0) * 0.08s) both;
+}
+.event-row:first-child { border-top: 1px solid rgba(255, 255, 255, 0.07); }
+.event-row.next {
+  border-radius: 6px; padding-left: 14px; padding-right: 14px;
+  border-color: transparent; margin: 0 -14px;
+  animation: fadeRight 0.5s calc(0.32s + var(--i, 0) * 0.08s) both,
+             nextPulse 3s 1s ease-in-out infinite;
+}
+@keyframes nextPulse {
+  0%, 100% { background: rgba(3, 117, 255, 0.07); }
+  50%      { background: rgba(3, 117, 255, 0.14); }
+}
+.event-icon { font-size: clamp(16px, 1.8vw, 26px); flex-shrink: 0; width: clamp(24px, 2.2vw, 32px); text-align: center; }
+.event-date {
+  min-width: clamp(54px, 6vw, 88px);
+  font-size: clamp(12px, 1.15vw, 17px); font-weight: 700;
+  color: rgba(255, 255, 255, 0.28); text-transform: uppercase;
+  letter-spacing: 0.04em; flex-shrink: 0;
+}
+.event-row.next .event-date { color: var(--accent); }
+.event-divider {
+  width: 1px; height: clamp(16px, 2.2vh, 28px);
+  background: rgba(255, 255, 255, 0.1); flex-shrink: 0;
+}
+.event-row.next .event-divider { background: rgba(3, 117, 255, 0.4); }
+.event-info { flex: 1; min-width: 0; }
+.event-name {
+  font-size: clamp(16px, 1.75vw, 26px); font-weight: 900;
+  color: var(--fg); text-transform: uppercase; letter-spacing: -0.01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.event-time {
+  font-size: clamp(9px, 0.88vw, 13px);
+  color: rgba(255, 255, 255, 0.3); margin-top: 2px; letter-spacing: 0.04em;
+}
+.event-tag {
+  font-size: clamp(8px, 0.78vw, 11px); font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); background: rgba(3, 117, 255, 0.12);
+  border: 1px solid rgba(3, 117, 255, 0.35);
+  padding: 4px 10px; border-radius: 3px;
+  white-space: nowrap; flex-shrink: 0;
+}
+.birthdays-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  padding-top: clamp(10px, 1.4vh, 20px);
+}
+.bday-label {
+  font-size: clamp(9px, 0.9vw, 13px); font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25); margin-bottom: clamp(6px, 1vh, 14px);
+  opacity: 0; animation: fadeUp 0.5s 0.55s forwards;
+}
+.bday-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: clamp(7px, 1vh, 14px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  opacity: 0;
+  animation: fadeUp 0.5s calc(0.58s + var(--i, 0) * 0.07s) both;
+}
+.bday-row:first-of-type { border-top: 1px solid rgba(255, 255, 255, 0.05); }
+.bday-icon { font-size: clamp(14px, 1.5vw, 22px); flex-shrink: 0; }
+.bday-name {
+  font-size: clamp(14px, 1.5vw, 22px); font-weight: 900;
+  color: var(--fg); text-transform: uppercase; letter-spacing: -0.01em; flex: 1;
+}
+.bday-date {
+  font-size: clamp(11px, 1.05vw, 15px); font-weight: 700;
+  color: rgba(255, 255, 255, 0.3); text-transform: uppercase; letter-spacing: 0.05em;
+}
+.bday-today {
+  font-size: clamp(8px, 0.8vw, 11px); font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: #FFB800; background: rgba(255, 184, 0, 0.12);
+  border: 1px solid rgba(255, 184, 0, 0.3);
+  padding: 3px 9px; border-radius: 3px; white-space: nowrap;
+}
