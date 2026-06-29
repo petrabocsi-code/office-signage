@@ -11,14 +11,14 @@
   const CYCLE_MS = 7000;
   const BASE_ZINDEX = { 'slot-0': 1, 'slot-1': 2, 'slot-2': 3 };
 
-  function renderToSlot(slotEl, idx) {
+  const FADE_MS = 800;
+
+  function makeCard(idx) {
     const item = POPUPS_DATA[idx % POPUPS_DATA.length];
     const img = document.createElement('img');
     img.src = item.src;
     img.alt = item.alt || '';
-    img.className = 'popup-card';
-    slotEl.innerHTML = '';
-    slotEl.appendChild(img);
+    img.className = 'popup-card fade-in-start';
     return img;
   }
 
@@ -26,22 +26,33 @@
     const slotEl = document.getElementById(slotId);
     if (!slotEl) return;
     let idx = ((startIdx % POPUPS_DATA.length) + POPUPS_DATA.length) % POPUPS_DATA.length;
-    renderToSlot(slotEl, idx);
+
+    // Show first card immediately
+    const first = makeCard(idx);
+    slotEl.appendChild(first);
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { first.classList.remove('fade-in-start'); });
+    });
 
     function cycle() {
       const existing = slotEl.querySelector('.popup-card');
       if (!existing) return;
-      slotEl.style.zIndex = '4'; // bring above other slots during transition
-      existing.classList.add('fade-out');
+
+      idx = (idx + STEP) % POPUPS_DATA.length;
+      slotEl.style.zIndex = '4';
+
+      // Add new card on top while old is still visible — true cross-fade
+      const newCard = makeCard(idx);
+      slotEl.appendChild(newCard);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { newCard.classList.remove('fade-in-start'); });
+      });
+
+      // Remove old card after fade completes
       setTimeout(function () {
-        idx = (idx + STEP) % POPUPS_DATA.length;
-        const newCard = renderToSlot(slotEl, idx);
-        newCard.classList.add('fade-in-start');
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () { newCard.classList.remove('fade-in-start'); });
-        });
-        setTimeout(function () { slotEl.style.zIndex = BASE_ZINDEX[slotId]; }, 700);
-      }, 650);
+        if (existing.parentNode === slotEl) slotEl.removeChild(existing);
+        slotEl.style.zIndex = BASE_ZINDEX[slotId];
+      }, FADE_MS + 50);
     }
 
     setTimeout(function () { setInterval(cycle, CYCLE_MS); }, initialDelay);

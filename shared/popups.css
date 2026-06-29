@@ -43,7 +43,7 @@
   position: absolute; width: 100%; height: auto; max-height: 84vh;
   border-radius: 14px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06);
-  transition: opacity 0.55s ease;
+  transition: opacity 0.8s ease-in-out;
 }
 /* per-slot vertical stagger */
 #slot-0 .popup-card { top: 5vh; }
