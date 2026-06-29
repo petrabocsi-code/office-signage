@@ -31,7 +31,7 @@
     function cycle() {
       const existing = slotEl.querySelector('.popup-card');
       if (!existing) return;
-      slotEl.style.zIndex = '10'; // bring to front during transition
+      slotEl.style.zIndex = '4'; // bring above other slots during transition
       existing.classList.add('fade-out');
       setTimeout(function () {
         idx = (idx + STEP) % POPUPS_DATA.length;

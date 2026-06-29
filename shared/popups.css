@@ -11,14 +11,15 @@
 }
 
 .popups-left {
-  position: relative; z-index: 10;
+  position: relative; z-index: 20;
   display: flex; flex-direction: column;
   padding: 5vh 4.5vw;
   border-right: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
 }
 
 .popups-title {
-  font-size: clamp(42px, 6.8vw, 96px); font-weight: 900; color: #fff;
+  font-size: clamp(32px, 4.6vw, 64px); font-weight: 900; color: #fff;
   line-height: 0.88; text-transform: uppercase; letter-spacing: -0.03em;
   margin-bottom: clamp(12px, 1.8vh, 22px);
   opacity: 0; animation: fadeUp 0.6s 0.25s forwards;
@@ -28,6 +29,7 @@
 .popups-stage {
   display: flex; align-items: stretch; overflow: hidden;
   position: relative; z-index: 1; padding: 2vh 1.5vw;
+  isolation: isolate;
 }
 
 .popup-slot { position: relative; flex: 0 0 39%; min-width: 0; overflow: hidden; }
@@ -50,3 +52,4 @@
 
 .popup-card.fade-out { opacity: 0; pointer-events: none; }
 .popup-card.fade-in-start { opacity: 0; }
+
