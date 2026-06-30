@@ -11,14 +11,16 @@
   const CYCLE_MS = 7000;
   const BASE_ZINDEX = { 'slot-0': 1, 'slot-1': 2, 'slot-2': 3 };
 
-  const FADE_MS = 800;
+  const FADE_MS = 600;
 
-  function makeCard(idx) {
+  function renderToSlot(slotEl, idx) {
     const item = POPUPS_DATA[idx % POPUPS_DATA.length];
     const img = document.createElement('img');
     img.src = item.src;
     img.alt = item.alt || '';
     img.className = 'popup-card fade-in-start';
+    slotEl.innerHTML = '';
+    slotEl.appendChild(img);
     return img;
   }
 
@@ -28,8 +30,7 @@
     let idx = ((startIdx % POPUPS_DATA.length) + POPUPS_DATA.length) % POPUPS_DATA.length;
 
     // Show first card immediately
-    const first = makeCard(idx);
-    slotEl.appendChild(first);
+    const first = renderToSlot(slotEl, idx);
     requestAnimationFrame(function () {
       requestAnimationFrame(function () { first.classList.remove('fade-in-start'); });
     });
@@ -37,25 +38,20 @@
     function cycle() {
       const existing = slotEl.querySelector('.popup-card');
       if (!existing) return;
-
-      idx = (idx + STEP) % POPUPS_DATA.length;
       slotEl.style.zIndex = '4';
 
-      // Fade out the old card and fade in the new one simultaneously
-      const newCard = makeCard(idx);
-      slotEl.appendChild(newCard);
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () {
-          existing.classList.add('fade-out');
-          newCard.classList.remove('fade-in-start');
-        });
-      });
-
-      // Remove old card after both fades complete
+      // Fade out old card, then immediately fade in new — no gap, no overlap
+      existing.classList.add('fade-out');
       setTimeout(function () {
-        if (existing.parentNode === slotEl) slotEl.removeChild(existing);
-        slotEl.style.zIndex = BASE_ZINDEX[slotId];
-      }, FADE_MS + 50);
+        idx = (idx + STEP) % POPUPS_DATA.length;
+        const newCard = renderToSlot(slotEl, idx);
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            newCard.classList.remove('fade-in-start');
+            slotEl.style.zIndex = BASE_ZINDEX[slotId];
+          });
+        });
+      }, FADE_MS);
     }
 
     setTimeout(function () { setInterval(cycle, CYCLE_MS); }, initialDelay);
