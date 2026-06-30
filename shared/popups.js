@@ -41,14 +41,17 @@
       idx = (idx + STEP) % POPUPS_DATA.length;
       slotEl.style.zIndex = '4';
 
-      // Add new card on top while old is still visible — true cross-fade
+      // Fade out the old card and fade in the new one simultaneously
       const newCard = makeCard(idx);
       slotEl.appendChild(newCard);
       requestAnimationFrame(function () {
-        requestAnimationFrame(function () { newCard.classList.remove('fade-in-start'); });
+        requestAnimationFrame(function () {
+          existing.classList.add('fade-out');
+          newCard.classList.remove('fade-in-start');
+        });
       });
 
-      // Remove old card after fade completes
+      // Remove old card after both fades complete
       setTimeout(function () {
         if (existing.parentNode === slotEl) slotEl.removeChild(existing);
         slotEl.style.zIndex = BASE_ZINDEX[slotId];
