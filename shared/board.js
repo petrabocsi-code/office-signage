@@ -39,8 +39,8 @@
     }
 
     if (upcoming.length) {
-      const todayTs = today().getTime();
-      const todayEvents = upcoming.filter(function (ev) { return ev.dateObj.getTime() === todayTs; });
+      const todayStr = new Date().toDateString();
+      const todayEvents = upcoming.filter(function (ev) { return ev.dateObj.toDateString() === todayStr; });
       const name = document.getElementById('cd-name');
       const days = document.getElementById('cd-days');
       const unit = document.getElementById('cd-unit');
