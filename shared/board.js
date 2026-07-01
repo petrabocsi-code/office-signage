@@ -52,7 +52,7 @@
           name.style.whiteSpace = 'normal';
           name.innerHTML = todayEvents.map(function (ev) { return '<div style="margin-bottom:10px">' + ev.icon + ' ' + ev.label + '</div>'; }).join('');
         }
-        if (days) days.textContent = '';
+        if (days) days.textContent = 'Today';
         if (unit) unit.textContent = '';
       } else {
         const next = upcoming[0];
