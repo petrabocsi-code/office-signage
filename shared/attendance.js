@@ -41,14 +41,14 @@
     if (s >= 75) return 'On Track';
     if (s >= 55) return 'Falling Behind';
     if (s >= 35) return 'Needs Attention';
-    return 'Below Target';
+    return 'Just Beginning';
   }
   function getMsg(s) {
     if (s >= 90) return 'The office is fully alive this month.';
     if (s >= 75) return 'The month is going well — keep it up.';
     if (s >= 55) return 'Attendance is slipping a little.';
     if (s >= 35) return 'The team needs more office days.';
-    return 'Significantly below the board minimum.';
+    return 'The month has just started — let\'s make it bloom.';
   }
 
   function lerp(a, b, t) { return a + (b - a) * t; }
