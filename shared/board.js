@@ -47,7 +47,7 @@
       const label = document.querySelector('.countdown-label');
 
       if (todayEvents.length > 1) {
-        if (label) label.textContent = 'Today';
+        if (label) label.textContent = 'Next event';
         if (name) {
           name.style.whiteSpace = 'normal';
           name.innerHTML = todayEvents.map(function (ev) { return '<div style="margin-bottom:10px">' + ev.icon + ' ' + ev.label + '</div>'; }).join('');
