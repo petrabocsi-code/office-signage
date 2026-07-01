@@ -39,14 +39,28 @@
     }
 
     if (upcoming.length) {
-      const next = upcoming[0];
+      const todayTs = today().getTime();
+      const todayEvents = upcoming.filter(function (ev) { return ev.dateObj.getTime() === todayTs; });
       const name = document.getElementById('cd-name');
       const days = document.getElementById('cd-days');
       const unit = document.getElementById('cd-unit');
-      const diff = Math.round((next.dateObj - today()) / 86400000);
-      if (name) name.textContent = next.icon + ' ' + next.label;
-      if (days) days.textContent = diff === 0 ? 'Today' : diff;
-      if (unit) unit.textContent = diff === 0 ? '' : diff === 1 ? 'day to go' : 'days to go';
+      const label = document.querySelector('.countdown-label');
+
+      if (todayEvents.length > 1) {
+        if (label) label.textContent = 'Today';
+        if (name) {
+          name.style.whiteSpace = 'normal';
+          name.innerHTML = todayEvents.map(function (ev) { return ev.icon + ' ' + ev.label; }).join('<br>');
+        }
+        if (days) days.textContent = '';
+        if (unit) unit.textContent = '';
+      } else {
+        const next = upcoming[0];
+        const diff = Math.round((next.dateObj - today()) / 86400000);
+        if (name) name.textContent = next.icon + ' ' + next.label;
+        if (days) days.textContent = diff === 0 ? 'Today' : diff;
+        if (unit) unit.textContent = diff === 0 ? '' : diff === 1 ? 'day to go' : 'days to go';
+      }
     }
   }
 
