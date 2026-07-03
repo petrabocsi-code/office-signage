@@ -3,5 +3,6 @@
   { "file": "slides/events.html", "seconds": 20 },
   { "file": "slides/office-attendance.html", "seconds": 20 },
   { "file": "slides/clients-map.html", "seconds": 30 },
-  { "file": "slides/live-popups.html", "seconds": 20 }
+  { "file": "slides/live-popups.html", "seconds": 20 },
+  { "file": "slides/sms-stats.html", "seconds": 20 }
 ]

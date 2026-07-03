@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · SMS/MMS This Month</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<style>
+  .stat-right {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 5vh 5vw; gap: clamp(10px, 2vh, 24px);
+  }
+  .stat-number {
+    font-size: clamp(80px, 18vw, 260px); font-weight: 900;
+    color: var(--accent); line-height: 0.88;
+    letter-spacing: -0.04em;
+    opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .stat-label {
+    font-size: clamp(11px, 1.1vw, 16px); font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+    opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
+  }
+  .slide-title {
+    font-size: clamp(28px, 4vw, 58px); font-weight: 900;
+    color: var(--fg); line-height: 0.9;
+    text-transform: uppercase; letter-spacing: -0.02em;
+    margin-top: clamp(12px, 2vh, 24px);
+    opacity: 0; animation: fadeUp 0.7s 0.25s forwards;
+  }
+</style>
+</head>
+<body>
+<div class="screen">
+  <canvas class="bg-canvas" id="bgCanvas"></canvas>
+  <div class="clock" id="clock-el"></div>
+  <div class="left">
+    <div class="brand">
+      <div class="logo-wrap"></div>
+      <div class="top-label">Budapest office</div>
+    </div>
+    <div class="slide-title">SMS/MMS<br>sent this<br>month</div>
+  </div>
+  <div class="stat-right">
+    <div class="stat-number">5.28M</div>
+    <div class="stat-label">messages sent</div>
+  </div>
+</div>
+<script src="../shared/chrome.js"></script>
+</body>
+</html>
