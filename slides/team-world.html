@@ -125,33 +125,39 @@ CITIES.forEach(function(city, i) {
   container.appendChild(card);
 
   timeEls.push({ el: timeEl, tz: city.tz });
-
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=' + city.lat + '&longitude=' + city.lon +
-    '&current=temperature_2m,weather_code&timezone=auto')
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      const temp = Math.round(d.current.temperature_2m);
-      const emoji = weatherEmoji(d.current.weather_code);
-      weatherEl.textContent = emoji + '  ' + temp + '°C';
-    })
-    .catch(function() { weatherEl.textContent = '–'; });
 });
 
 setInterval(function() {
   timeEls.forEach(function(t) { t.el.textContent = getTime(t.tz); });
 }, 1000);
 
-// refresh weather every 15 minutes
+function fetchWeather(city, el, attempt) {
+  attempt = attempt || 1;
+  var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + city.lat +
+    '&longitude=' + city.lon + '&current=temperature_2m,weather_code&timezone=auto';
+  fetch(url)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var temp = Math.round(d.current.temperature_2m);
+      var emoji = weatherEmoji(d.current.weather_code);
+      el.textContent = emoji + ' ' + temp + '°C';
+    })
+    .catch(function() {
+      if (attempt < 4) {
+        setTimeout(function() { fetchWeather(city, el, attempt + 1); }, attempt * 5000);
+      }
+    });
+}
+
+CITIES.forEach(function(city, i) {
+  var el = container.children[i].querySelector('.city-weather');
+  fetchWeather(city, el);
+});
+
 setInterval(function() {
   CITIES.forEach(function(city, i) {
-    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + city.lat + '&longitude=' + city.lon +
-      '&current=temperature_2m,weather_code&timezone=auto')
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        const temp = Math.round(d.current.temperature_2m);
-        const emoji = weatherEmoji(d.current.weather_code);
-        container.children[i].querySelector('.city-weather').textContent = emoji + '  ' + temp + '°C';
-      });
+    var el = container.children[i].querySelector('.city-weather');
+    fetchWeather(city, el);
   });
 }, 15 * 60 * 1000);
 </script>
