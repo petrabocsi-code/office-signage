@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recart · Team Around the World</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/theme.css">
+<style>
+  .cities {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1px;
+    background: rgba(255,255,255,0.06);
+    height: 100%;
+    position: relative; z-index: 1;
+  }
+  .city-card {
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 0 2.5vw;
+    gap: clamp(4px, 0.8vh, 10px);
+    opacity: 0; animation: fadeUp 0.6s forwards;
+  }
+  .city-header {
+    display: flex; align-items: center; gap: 0.5em;
+    font-size: clamp(11px, 1vw, 15px); font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+  .city-time {
+    font-size: clamp(36px, 4.8vw, 72px); font-weight: 900;
+    color: var(--fg); line-height: 1;
+    letter-spacing: -0.03em; font-variant-numeric: tabular-nums;
+  }
+  .city-weather {
+    font-size: clamp(12px, 1.1vw, 17px); font-weight: 600;
+    color: var(--accent); letter-spacing: 0.02em;
+  }
+  .left {
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 5vh 4.5vw; position: relative; z-index: 1;
+  }
+  .slide-title {
+    font-size: clamp(32px, 4.2vw, 62px); font-weight: 900;
+    color: var(--fg); line-height: 0.92;
+    text-transform: uppercase; letter-spacing: -0.02em;
+    margin-top: clamp(16px, 3vh, 32px);
+    opacity: 0; animation: fadeUp 0.7s 0.1s forwards;
+  }
+  .slide-title span { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="screen" style="grid-template-columns: 38% 1fr; grid-template-rows: 1fr;">
+  <canvas class="bg-canvas" id="bgCanvas"></canvas>
+  <div class="clock" id="clock-el"></div>
+
+  <div class="left">
+    <div>
+      <div class="brand">
+        <div class="logo-wrap"></div>
+        <div class="top-label">Budapest office</div>
+      </div>
+      <div class="slide-title">Team<br>around<br>the <span>world</span></div>
+    </div>
+  </div>
+
+  <div class="cities" id="cities"></div>
+</div>
+
+<script>
+const CITIES = [
+  { name: 'Budapest',       flag: '🇭🇺', tz: 'Europe/Budapest',      lat: 47.4979,  lon: 19.0402  },
+  { name: 'Salt Lake City', flag: '🇺🇸', tz: 'America/Denver',        lat: 40.7608,  lon: -111.891 },
+  { name: 'Portimão',       flag: '🇵🇹', tz: 'Europe/Lisbon',         lat: 37.1359,  lon: -8.5383  },
+  { name: 'Boca Raton',     flag: '🇺🇸', tz: 'America/New_York',      lat: 26.3683,  lon: -80.1289 },
+  { name: 'Cape Town',      flag: '🇿🇦', tz: 'Africa/Johannesburg',   lat: -33.9249, lon: 18.4241  },
+  { name: 'Vrnjačka Banja', flag: '🇷🇸', tz: 'Europe/Belgrade',       lat: 43.6167,  lon: 21.3000  },
+];
+
+function weatherEmoji(code) {
+  if (code === 0)           return '☀️';
+  if (code <= 2)            return '🌤️';
+  if (code === 3)           return '☁️';
+  if (code <= 48)           return '🌫️';
+  if (code <= 57)           return '🌦️';
+  if (code <= 67)           return '🌧️';
+  if (code <= 77)           return '❄️';
+  if (code <= 82)           return '🌧️';
+  if (code <= 86)           return '❄️';
+  return '⛈️';
+}
+
+function getTime(tz) {
+  return new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: tz });
+}
+
+const container = document.getElementById('cities');
+const timeEls = [];
+
+CITIES.forEach(function(city, i) {
+  const card = document.createElement('div');
+  card.className = 'city-card';
+  card.style.animationDelay = (0.15 + i * 0.08) + 's';
+
+  const header = document.createElement('div');
+  header.className = 'city-header';
+  header.textContent = city.flag + '  ' + city.name;
+
+  const timeEl = document.createElement('div');
+  timeEl.className = 'city-time';
+  timeEl.textContent = getTime(city.tz);
+
+  const weatherEl = document.createElement('div');
+  weatherEl.className = 'city-weather';
+  weatherEl.textContent = '…';
+
+  card.appendChild(header);
+  card.appendChild(timeEl);
+  card.appendChild(weatherEl);
+  container.appendChild(card);
+
+  timeEls.push({ el: timeEl, tz: city.tz });
+
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=' + city.lat + '&longitude=' + city.lon +
+    '&current=temperature_2m,weather_code&timezone=auto')
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      const temp = Math.round(d.current.temperature_2m);
+      const emoji = weatherEmoji(d.current.weather_code);
+      weatherEl.textContent = emoji + '  ' + temp + '°C';
+    })
+    .catch(function() { weatherEl.textContent = '–'; });
+});
+
+setInterval(function() {
+  timeEls.forEach(function(t) { t.el.textContent = getTime(t.tz); });
+}, 1000);
+
+// refresh weather every 15 minutes
+setInterval(function() {
+  CITIES.forEach(function(city, i) {
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + city.lat + '&longitude=' + city.lon +
+      '&current=temperature_2m,weather_code&timezone=auto')
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        const temp = Math.round(d.current.temperature_2m);
+        const emoji = weatherEmoji(d.current.weather_code);
+        container.children[i].querySelector('.city-weather').textContent = emoji + '  ' + temp + '°C';
+      });
+  });
+}, 15 * 60 * 1000);
+</script>
+<script src="../shared/chrome.js"></script>
+</body>
+</html>
